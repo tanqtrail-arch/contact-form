@@ -4,7 +4,7 @@ import { s } from "../utils/styles";
 
 const WEEKDAYS = ["日", "月", "火", "水", "木", "金", "土"];
 
-function MonthCalendar({ year, month, sessions, closedDays, closedAll }) {
+function MonthCalendar({ year, month, sessions, closedDays }) {
   const saturdays = getSaturdays(year, month);
   const closedSet = new Set(closedDays);
   const classSet = new Set(saturdays.filter((d) => !closedSet.has(d)));
@@ -84,8 +84,8 @@ function MonthCalendar({ year, month, sessions, closedDays, closedAll }) {
           {w.map((day, di) => {
             if (day == null) return <div key={di} style={cellBase} />;
 
-            const isClass = !closedAll && classSet.has(day);
-            const isClosed = closedAll || closedSet.has(day);
+            const isClass = classSet.has(day);
+            const isClosed = closedSet.has(day);
             const isSunday = di === 0;
 
             let bg = "transparent";
@@ -137,7 +137,6 @@ export default function CalendarPage() {
               month={m.month}
               sessions={m.sessions}
               closedDays={m.closedDays}
-              closedAll={m.closedAll}
             />
           ))}
         </div>
