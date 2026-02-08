@@ -10,8 +10,29 @@
   </head>
   <body>
     <div id="root">
-      <div style="display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:'Noto Sans JP',sans-serif;color:#1B6B4A">読み込み中…</div>
+      <div id="loading-fallback" style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;font-family:'Noto Sans JP',sans-serif;color:#1B6B4A;gap:16px">
+        <div style="font-size:24px;font-weight:700">TRAIL</div>
+        <div>読み込み中…</div>
+      </div>
     </div>
+    <noscript>
+      <div style="display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:sans-serif;color:#C44B4B;text-align:center;padding:20px">
+        このサイトの表示にはJavaScriptが必要です。ブラウザの設定でJavaScriptを有効にしてください。
+      </div>
+    </noscript>
     <script type="module" src="/src/main.jsx"></script>
+    <script>
+      // If the app hasn't mounted after 10 seconds, show an error
+      setTimeout(function() {
+        var el = document.getElementById('loading-fallback');
+        if (el) {
+          el.innerHTML = '<div style="text-align:center;padding:20px">' +
+            '<div style="font-size:24px;font-weight:700;margin-bottom:12px">TRAIL</div>' +
+            '<div style="color:#C44B4B;margin-bottom:12px">ページの読み込みに失敗しました</div>' +
+            '<button onclick="location.reload()" style="padding:10px 24px;border-radius:8px;border:none;background:#1B6B4A;color:#fff;cursor:pointer;font-size:14px">再読み込み</button>' +
+            '</div>';
+        }
+      }, 10000);
+    </script>
   </body>
 </html>
