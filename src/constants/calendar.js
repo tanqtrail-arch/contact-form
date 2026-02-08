@@ -1,115 +1,30 @@
-// Calendar Data 2025 (fiscal year)
-export const CALENDAR_2025 = [
-  {
-    month: 4,
-    events: [
-      { date: "4/5", label: "春期スタート", type: "start" },
-      { date: "4/12", label: "保護者説明会", type: "event" },
-      { date: "4/29", label: "昭和の日（休講）", type: "holiday" },
-    ],
-  },
-  {
-    month: 5,
-    events: [
-      { date: "5/3-5/6", label: "GW休講", type: "holiday" },
-      { date: "5/17", label: "探究発表会", type: "event" },
-    ],
-  },
-  {
-    month: 6,
-    events: [
-      { date: "6/14", label: "個別面談週間", type: "meeting" },
-      { date: "6/28", label: "前期中間まとめ", type: "event" },
-    ],
-  },
-  {
-    month: 7,
-    events: [
-      { date: "7/19", label: "前期終了", type: "end" },
-      { date: "7/21-8/31", label: "夏期特別講座", type: "special" },
-    ],
-  },
-  {
-    month: 8,
-    events: [
-      { date: "8/11-8/16", label: "お盆休み", type: "holiday" },
-      { date: "8/24", label: "夏の探究発表会", type: "event" },
-    ],
-  },
-  {
-    month: 9,
-    events: [
-      { date: "9/1", label: "後期スタート", type: "start" },
-      { date: "9/15", label: "敬老の日（休講）", type: "holiday" },
-    ],
-  },
-  {
-    month: 10,
-    events: [
-      { date: "10/13", label: "体育の日（休講）", type: "holiday" },
-      { date: "10/25", label: "ハロウィン探究", type: "special" },
-    ],
-  },
-  {
-    month: 11,
-    events: [
-      { date: "11/3", label: "文化の日（休講）", type: "holiday" },
-      { date: "11/15", label: "後期面談週間", type: "meeting" },
-      { date: "11/29", label: "探究発表会", type: "event" },
-    ],
-  },
-  {
-    month: 12,
-    events: [
-      { date: "12/21", label: "後期終了", type: "end" },
-      { date: "12/23-1/6", label: "冬期休講", type: "holiday" },
-    ],
-  },
-  {
-    month: 1,
-    events: [
-      { date: "1/7", label: "3学期スタート", type: "start" },
-      { date: "1/13", label: "成人の日（休講）", type: "holiday" },
-    ],
-  },
-  {
-    month: 2,
-    events: [
-      { date: "2/11", label: "建国記念日（休講）", type: "holiday" },
-      { date: "2/22", label: "年度末面談", type: "meeting" },
-    ],
-  },
-  {
-    month: 3,
-    events: [
-      { date: "3/15", label: "年度末発表会", type: "event" },
-      { date: "3/21", label: "春分の日（休講）", type: "holiday" },
-      { date: "3/28", label: "年度終了", type: "end" },
-    ],
-  },
+// Calendar Data 2026 fiscal year (Feb 2026 – Jan 2027)
+// Each entry: year, month, sessions (授業回数), closedDays (休講日 = day-of-month)
+// Class days are every Saturday NOT listed in closedDays.
+
+export const FISCAL_YEAR = 2026;
+
+export const CALENDAR_2026 = [
+  { year: 2026, month: 2, sessions: 4, closedDays: [] },
+  { year: 2026, month: 3, sessions: 4, closedDays: [] },
+  { year: 2026, month: 4, sessions: 4, closedDays: [] },
+  { year: 2026, month: 5, sessions: 4, closedDays: [2] },
+  { year: 2026, month: 6, sessions: 4, closedDays: [] },
+  { year: 2026, month: 7, sessions: 4, closedDays: [] },
+  { year: 2026, month: 8, sessions: 0, closedDays: [1, 8, 15, 22, 29] },
+  { year: 2026, month: 9, sessions: 4, closedDays: [] },
+  { year: 2026, month: 10, sessions: 4, closedDays: [31] },
+  { year: 2026, month: 11, sessions: 4, closedDays: [] },
+  { year: 2026, month: 12, sessions: 4, closedDays: [] },
+  { year: 2027, month: 1, sessions: 4, closedDays: [2] },
 ];
 
-export const EVENT_COLORS = {
-  start: { bg: "#E8F5EE", text: "#1B6B4A", dot: "#1B6B4A" },
-  end: { bg: "#FFF3E0", text: "#B8860B", dot: "#E8A838" },
-  event: { bg: "#E3F2FD", text: "#1565C0", dot: "#1976D2" },
-  holiday: { bg: "#FFEBEE", text: "#C44B4B", dot: "#E57373" },
-  meeting: { bg: "#F3E5F5", text: "#7B1FA2", dot: "#AB47BC" },
-  special: { bg: "#FFF8E1", text: "#F57F17", dot: "#FFB300" },
-};
-
-export const MONTH_NAMES = [
-  "",
-  "1月",
-  "2月",
-  "3月",
-  "4月",
-  "5月",
-  "6月",
-  "7月",
-  "8月",
-  "9月",
-  "10月",
-  "11月",
-  "12月",
-];
+/** Return all Saturdays (day-of-month) in a given year/month */
+export function getSaturdays(year, month) {
+  const result = [];
+  const days = new Date(year, month, 0).getDate();
+  for (let d = 1; d <= days; d++) {
+    if (new Date(year, month - 1, d).getDay() === 6) result.push(d);
+  }
+  return result;
+}

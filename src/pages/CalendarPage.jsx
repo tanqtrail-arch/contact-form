@@ -1,163 +1,158 @@
-import { useState } from "react";
 import { BRAND } from "../constants/brand";
-import { CALENDAR_2025, EVENT_COLORS, MONTH_NAMES } from "../constants/calendar";
+import { CALENDAR_2026, FISCAL_YEAR, getSaturdays } from "../constants/calendar";
 import { s } from "../utils/styles";
 
-const EVENT_LABELS = {
-  start: "開始",
-  end: "終了",
-  event: "イベント",
-  holiday: "休講",
-  meeting: "面談",
-  special: "特別",
-};
+const WEEKDAYS = ["日", "月", "火", "水", "木", "金", "土"];
 
-export default function CalendarPage() {
-  const [selectedMonth, setSelectedMonth] = useState(null);
+function MonthCalendar({ year, month, sessions, closedDays }) {
+  const saturdays = getSaturdays(year, month);
+  const closedSet = new Set(closedDays);
+  const classSet = new Set(saturdays.filter((d) => !closedSet.has(d)));
 
-  const orderedMonths = [...CALENDAR_2025].sort((a, b) => {
-    const orderA = a.month >= 4 ? a.month - 4 : a.month + 8;
-    const orderB = b.month >= 4 ? b.month - 4 : b.month + 8;
-    return orderA - orderB;
-  });
+  const firstDow = new Date(year, month - 1, 1).getDay();
+  const daysInMonth = new Date(year, month, 0).getDate();
+
+  // Build week rows
+  const weeks = [];
+  let week = new Array(firstDow).fill(null);
+  for (let d = 1; d <= daysInMonth; d++) {
+    week.push(d);
+    if (week.length === 7) {
+      weeks.push(week);
+      week = [];
+    }
+  }
+  if (week.length > 0) {
+    while (week.length < 7) week.push(null);
+    weeks.push(week);
+  }
+
+  const cellBase = {
+    width: 28,
+    height: 24,
+    textAlign: "center",
+    fontSize: 12,
+    lineHeight: "24px",
+    borderRadius: 3,
+  };
 
   return (
-    <div>
-      <div style={s.card}>
-        <div style={s.cardTitle}>
-          <span>📅</span> 2025年度 年間カレンダー
-        </div>
-        <p style={{ fontSize: 13, color: BRAND.textMuted, marginBottom: 24 }}>
-          月をクリックすると詳細が表示されます。
-        </p>
+    <div
+      style={{
+        background: BRAND.white,
+        borderRadius: 10,
+        border: `1px solid ${BRAND.borderLight}`,
+        padding: "12px 10px",
+        minWidth: 0,
+      }}
+    >
+      {/* Month header */}
+      <div
+        style={{
+          textAlign: "center",
+          fontWeight: 700,
+          fontSize: 14,
+          color: BRAND.text,
+          marginBottom: 8,
+        }}
+      >
+        {month}月度（{sessions}）
+      </div>
 
-        {/* Legend */}
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 12, marginBottom: 24 }}>
-          {Object.entries(EVENT_COLORS).map(([type, colors]) => (
-            <div key={type} style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 12 }}>
-              <div
-                style={{ width: 10, height: 10, borderRadius: 10, background: colors.dot }}
-              />
-              <span style={{ color: BRAND.textMuted }}>{EVENT_LABELS[type]}</span>
-            </div>
-          ))}
-        </div>
+      {/* Weekday headers */}
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)", gap: 1, marginBottom: 2 }}>
+        {WEEKDAYS.map((wd, i) => (
+          <div
+            key={i}
+            style={{
+              ...cellBase,
+              fontSize: 11,
+              fontWeight: 600,
+              height: 20,
+              lineHeight: "20px",
+              color: i === 0 ? "#D32F2F" : i === 6 ? "#1565C0" : BRAND.textMuted,
+            }}
+          >
+            {wd}
+          </div>
+        ))}
+      </div>
 
-        {/* Month grid */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))",
-            gap: 12,
-          }}
-        >
-          {orderedMonths.map((monthData) => {
-            const isSelected = selectedMonth === monthData.month;
+      {/* Date grid */}
+      {weeks.map((w, wi) => (
+        <div key={wi} style={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)", gap: 1 }}>
+          {w.map((day, di) => {
+            if (day == null) return <div key={di} style={cellBase} />;
+
+            const isClass = classSet.has(day);
+            const isClosed = closedSet.has(day);
+            const isSunday = di === 0;
+
+            let bg = "transparent";
+            let color = BRAND.text;
+
+            if (isClass) {
+              bg = "#D32F2F";
+              color = "#fff";
+            } else if (isClosed) {
+              bg = "#1565C0";
+              color = "#fff";
+            } else if (isSunday) {
+              color = "#D32F2F";
+            }
+
             return (
-              <div
-                key={monthData.month}
-                onClick={() => setSelectedMonth(isSelected ? null : monthData.month)}
-                style={{
-                  padding: "16px",
-                  borderRadius: 12,
-                  cursor: "pointer",
-                  transition: "all 0.2s ease",
-                  border: isSelected
-                    ? `2px solid ${BRAND.primary}`
-                    : `1.5px solid ${BRAND.borderLight}`,
-                  background: isSelected ? `${BRAND.primary}08` : BRAND.white,
-                }}
-                onMouseEnter={(e) => {
-                  if (!isSelected) e.currentTarget.style.borderColor = BRAND.primary + "60";
-                }}
-                onMouseLeave={(e) => {
-                  if (!isSelected) e.currentTarget.style.borderColor = BRAND.borderLight;
-                }}
-              >
-                <div
-                  style={{
-                    fontSize: 18,
-                    fontWeight: 700,
-                    color: isSelected ? BRAND.primary : BRAND.text,
-                    marginBottom: 8,
-                  }}
-                >
-                  {MONTH_NAMES[monthData.month]}
-                </div>
-                <div style={{ display: "flex", gap: 4, flexWrap: "wrap" }}>
-                  {monthData.events.map((ev, i) => (
-                    <div
-                      key={i}
-                      style={{
-                        width: 8,
-                        height: 8,
-                        borderRadius: 8,
-                        background: EVENT_COLORS[ev.type]?.dot || BRAND.textLight,
-                      }}
-                    />
-                  ))}
-                </div>
-                <div style={{ fontSize: 11, color: BRAND.textLight, marginTop: 6 }}>
-                  {monthData.events.length} 件
-                </div>
+              <div key={di} style={{ ...cellBase, background: bg, color, fontWeight: (isClass || isClosed) ? 700 : 400 }}>
+                {day}
               </div>
             );
           })}
         </div>
-      </div>
+      ))}
+    </div>
+  );
+}
 
-      {/* Selected month detail */}
-      {selectedMonth && (
-        <div style={{ ...s.card, borderLeft: `4px solid ${BRAND.primary}` }}>
-          <div style={{ fontSize: 20, fontWeight: 700, color: BRAND.primaryDark, marginBottom: 20 }}>
-            {MONTH_NAMES[selectedMonth]} のスケジュール
+export default function CalendarPage() {
+  return (
+    <div>
+      <div style={s.card}>
+        <div style={s.cardTitle}>
+          <span>📅</span> {FISCAL_YEAR}年度　TRAIL年間カレンダー
+        </div>
+
+        {/* Month grid — 3 columns on desktop, responsive */}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
+            gap: 16,
+            marginBottom: 24,
+          }}
+        >
+          {CALENDAR_2026.map((m) => (
+            <MonthCalendar
+              key={`${m.year}-${m.month}`}
+              year={m.year}
+              month={m.month}
+              sessions={m.sessions}
+              closedDays={m.closedDays}
+            />
+          ))}
+        </div>
+
+        {/* Legend */}
+        <div style={{ display: "flex", alignItems: "center", gap: 20, fontSize: 13, color: BRAND.textMuted }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+            <div style={{ width: 16, height: 16, borderRadius: 3, background: "#D32F2F" }} />
+            <span>授業日</span>
           </div>
-          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-            {CALENDAR_2025.find((m) => m.month === selectedMonth)?.events.map((ev, i) => {
-              const color = EVENT_COLORS[ev.type] || {
-                bg: "#F5F5F5",
-                text: "#666",
-                dot: "#999",
-              };
-              return (
-                <div
-                  key={i}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 14,
-                    padding: "14px 18px",
-                    borderRadius: 10,
-                    background: color.bg,
-                  }}
-                >
-                  <div
-                    style={{
-                      width: 10,
-                      height: 10,
-                      borderRadius: 10,
-                      background: color.dot,
-                      flexShrink: 0,
-                    }}
-                  />
-                  <div
-                    style={{
-                      fontSize: 14,
-                      fontWeight: 700,
-                      color: color.text,
-                      minWidth: 80,
-                      fontVariantNumeric: "tabular-nums",
-                    }}
-                  >
-                    {ev.date}
-                  </div>
-                  <div style={{ fontSize: 14, color: BRAND.text }}>{ev.label}</div>
-                </div>
-              );
-            })}
+          <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+            <div style={{ width: 16, height: 16, borderRadius: 3, background: "#1565C0" }} />
+            <span>休講日</span>
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
 }
