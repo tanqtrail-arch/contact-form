@@ -1,5 +1,6 @@
 // Calendar Data 2026 fiscal year (Feb 2026 – Jan 2027)
 // Each entry: year, month, sessions (授業回数), closedDays (休講日 = day-of-month)
+// closedAll: true → month-wide closure (e.g. summer break) — all dates shown as 休講
 // Class days are every Saturday NOT listed in closedDays.
 
 export const FISCAL_YEAR = 2026;
@@ -11,7 +12,7 @@ export const CALENDAR_2026 = [
   { year: 2026, month: 5, sessions: 4, closedDays: [2] },
   { year: 2026, month: 6, sessions: 4, closedDays: [] },
   { year: 2026, month: 7, sessions: 4, closedDays: [] },
-  { year: 2026, month: 8, sessions: 0, closedDays: [1, 8, 15, 22, 29] },
+  { year: 2026, month: 8, sessions: 0, closedDays: [1, 8, 15, 22, 29], closedAll: true },
   { year: 2026, month: 9, sessions: 4, closedDays: [] },
   { year: 2026, month: 10, sessions: 4, closedDays: [31] },
   { year: 2026, month: 11, sessions: 4, closedDays: [] },
