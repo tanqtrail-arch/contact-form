@@ -15,7 +15,7 @@ export const CALENDAR_2026 = [
   { year: 2026, month: 7, sessions: 4, closedDays: [30, 31] },
   { year: 2026, month: 8, sessions: 0, closedDays: range(1, 30) },
   { year: 2026, month: 9, sessions: 4, closedDays: [21, 22, 23] },
-  { year: 2026, month: 10, sessions: 3, closedDays: [22, 23, 24, 31] },
+  { year: 2026, month: 10, sessions: 4, closedDays: [22, 23, 24] },
   { year: 2026, month: 11, sessions: 4, closedDays: [] },
   { year: 2026, month: 12, sessions: 4, closedDays: [28, 29, 30, 31] },
   { year: 2027, month: 1, sessions: 4, closedDays: [1, 2, 3] },
