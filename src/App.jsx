@@ -22,11 +22,6 @@ export default function App() {
 
   return (
     <div style={s.app}>
-      <link
-        href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet"
-      />
-
       {/* Header */}
       <header style={s.header}>
         <div style={s.headerInner}>
