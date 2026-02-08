@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { BRAND, CLASS_OPTIONS } from "../constants/brand";
 import { AVAILABLE_SLOTS } from "../constants/booking";
+import { getClosedDateSet } from "../constants/calendar";
 import { s, focusStyle, blurStyle } from "../utils/styles";
 import { submitToGAS } from "../utils/submitToGAS";
 import Spinner from "../components/Spinner";
@@ -37,6 +38,7 @@ export default function BookingPage() {
   const [status, setStatus] = useState("idle");
 
   const calDays = generateCalendar();
+  const closedDates = useMemo(() => getClosedDateSet(), []);
   const isValid = form.parentName && form.studentName && form.className;
 
   const handleBook = async () => {
@@ -232,7 +234,8 @@ export default function BookingPage() {
             {calDays.map((day, i) => {
               if (!day) return <div key={`e-${i}`} />;
               const dateKey = getDateKey(day);
-              const hasSlots = AVAILABLE_SLOTS[dateKey];
+              const isClosed = closedDates.has(dateKey);
+              const hasSlots = !isClosed && AVAILABLE_SLOTS[dateKey];
               const dow = new Date(2026, 1, day).getDay();
               return (
                 <div
@@ -249,15 +252,22 @@ export default function BookingPage() {
                     borderRadius: 10,
                     fontSize: 14,
                     cursor: hasSlots ? "pointer" : "default",
-                    background: hasSlots ? `${BRAND.primary}10` : "transparent",
-                    color: !hasSlots
-                      ? BRAND.textLight
-                      : dow === 0
-                        ? BRAND.error
-                        : dow === 6
-                          ? "#1976D2"
-                          : BRAND.text,
+                    background: isClosed
+                      ? "#1565C020"
+                      : hasSlots
+                        ? `${BRAND.primary}10`
+                        : "transparent",
+                    color: isClosed
+                      ? "#1565C0"
+                      : !hasSlots
+                        ? BRAND.textLight
+                        : dow === 0
+                          ? BRAND.error
+                          : dow === 6
+                            ? "#1976D2"
+                            : BRAND.text,
                     fontWeight: hasSlots ? 600 : 400,
+                    opacity: isClosed ? 0.5 : 1,
                     border: hasSlots
                       ? `1.5px solid ${BRAND.primary}30`
                       : "1.5px solid transparent",
@@ -277,6 +287,9 @@ export default function BookingPage() {
                   }}
                 >
                   {day}
+                  {isClosed && (
+                    <div style={{ fontSize: 9, color: "#1565C0", marginTop: 1 }}>休</div>
+                  )}
                   {hasSlots && (
                     <div
                       style={{

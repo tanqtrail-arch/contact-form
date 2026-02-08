@@ -29,3 +29,23 @@ export function getSaturdays(year, month) {
   }
   return result;
 }
+
+const pad = (n) => String(n).padStart(2, "0");
+
+/** Return a Set of ISO date strings ("YYYY-MM-DD") for all 休講日 */
+export function getClosedDateSet() {
+  const dates = new Set();
+  for (const m of CALENDAR_2026) {
+    if (m.closedAll) {
+      const total = new Date(m.year, m.month, 0).getDate();
+      for (let d = 1; d <= total; d++) {
+        dates.add(`${m.year}-${pad(m.month)}-${pad(d)}`);
+      }
+    } else {
+      for (const d of m.closedDays) {
+        dates.add(`${m.year}-${pad(m.month)}-${pad(d)}`);
+      }
+    }
+  }
+  return dates;
+}
