@@ -1,13 +1,11 @@
 import { BRAND } from "../constants/brand";
-import { CALENDAR_2026, FISCAL_YEAR, getSaturdays } from "../constants/calendar";
+import { CALENDAR_2026, FISCAL_YEAR } from "../constants/calendar";
 import { s } from "../utils/styles";
 
 const WEEKDAYS = ["日", "月", "火", "水", "木", "金", "土"];
 
 function MonthCalendar({ year, month, sessions, closedDays }) {
-  const saturdays = getSaturdays(year, month);
   const closedSet = new Set(closedDays);
-  const classSet = new Set(saturdays.filter((d) => !closedSet.has(d)));
 
   const firstDow = new Date(year, month - 1, 1).getDay();
   const daysInMonth = new Date(year, month, 0).getDate();
@@ -85,7 +83,6 @@ function MonthCalendar({ year, month, sessions, closedDays }) {
               return <div key={di} style={{ height: 30 }} />;
             }
 
-            const isClass = classSet.has(day);
             const isClosed = closedSet.has(day);
             const isSunday = di === 0;
             const isSaturday = di === 6;
@@ -94,11 +91,7 @@ function MonthCalendar({ year, month, sessions, closedDays }) {
             let color = BRAND.text;
             let fontWeight = 400;
 
-            if (isClass) {
-              bg = "#D32F2F";
-              color = "#fff";
-              fontWeight = 700;
-            } else if (isClosed) {
+            if (isClosed) {
               bg = "#1565C0";
               color = "#fff";
               fontWeight = 700;
@@ -177,10 +170,6 @@ export default function CalendarPage() {
             flexWrap: "wrap",
           }}
         >
-          <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-            <div style={{ width: 18, height: 18, borderRadius: 4, background: "#D32F2F" }} />
-            <span style={{ fontWeight: 600, color: BRAND.text }}>授業日</span>
-          </div>
           <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
             <div style={{ width: 18, height: 18, borderRadius: 4, background: "#1565C0" }} />
             <span style={{ fontWeight: 600, color: BRAND.text }}>休講日</span>
