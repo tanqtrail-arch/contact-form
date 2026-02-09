@@ -1,10 +1,11 @@
 // Seminar data
+// 保護者セミナー：毎月第二日曜日 13:30〜14:30
 export const SEMINARS = [
   {
     id: 1,
     title: "AI時代の子育て — 「考える力」をどう育てるか",
-    date: "2026年3月14日（土）",
-    time: "10:00 〜 11:30",
+    date: "2026年3月8日（日）",
+    time: "13:30 〜 14:30",
     location: "TRAIL教室 / オンライン同時配信",
     speaker: "TRAIL代表",
     description:
@@ -17,8 +18,8 @@ export const SEMINARS = [
   {
     id: 2,
     title: "中学受験と探究学習 — 両立のリアル",
-    date: "2026年4月11日（土）",
-    time: "10:00 〜 11:30",
+    date: "2026年4月12日（日）",
+    time: "13:30 〜 14:30",
     location: "TRAIL教室",
     speaker: "TRAIL代表",
     description:
@@ -31,8 +32,8 @@ export const SEMINARS = [
   {
     id: 3,
     title: "子どもの「好き」を探究に変えるヒント",
-    date: "2026年5月16日（土）",
-    time: "10:00 〜 11:30",
+    date: "2026年5月10日（日）",
+    time: "13:30 〜 14:30",
     location: "TRAIL教室 / オンライン同時配信",
     speaker: "TRAIL代表",
     description:
