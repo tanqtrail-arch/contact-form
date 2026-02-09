@@ -373,9 +373,20 @@ export default function SeminarPage() {
         <div style={s.cardTitle}>
           <span>🎓</span> 保護者セミナー
         </div>
-        <p style={{ fontSize: 13, color: BRAND.textMuted, marginBottom: 24, lineHeight: 1.6 }}>
+        <p style={{ fontSize: 13, color: BRAND.textMuted, marginBottom: 12, lineHeight: 1.6 }}>
           TRAILでは保護者の皆さまを対象に、子どもの学びをより深くサポートするためのセミナーを定期開催しています。
         </p>
+        <div style={{
+          fontSize: 13,
+          color: BRAND.primary,
+          fontWeight: 600,
+          background: `${BRAND.primary}08`,
+          borderRadius: 8,
+          padding: "10px 16px",
+          marginBottom: 24,
+        }}>
+          毎月第2日曜日　13:30 〜 14:30
+        </div>
       </div>
 
       <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
