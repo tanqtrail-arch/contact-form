@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { BRAND, CLASS_OPTIONS } from "../constants/brand";
+import { getClosedDateSet } from "../constants/calendar";
 import { s, focusStyle, blurStyle } from "../utils/styles";
 import { submitToGAS } from "../utils/submitToGAS";
 import Spinner from "../components/Spinner";
@@ -10,8 +11,10 @@ const INITIAL_FORM = { studentName: "", className: "", date: "", reason: "", det
 export default function AbsencePage() {
   const [form, setForm] = useState(INITIAL_FORM);
   const [status, setStatus] = useState("idle");
+  const closedDates = useMemo(() => getClosedDateSet(), []);
 
-  const isValid = form.studentName && form.className && form.date && form.reason;
+  const isClosedDate = form.date && closedDates.has(form.date);
+  const isValid = form.studentName && form.className && form.date && form.reason && !isClosedDate;
 
   const handleSubmit = async () => {
     if (!isValid) return;
@@ -128,12 +131,20 @@ export default function AbsencePage() {
             </label>
             <input
               type="date"
-              style={s.input}
+              style={{
+                ...s.input,
+                ...(isClosedDate ? { borderColor: BRAND.error } : {}),
+              }}
               value={form.date}
               onChange={(e) => setForm({ ...form, date: e.target.value })}
               onFocus={focusStyle}
               onBlur={blurStyle}
             />
+            {isClosedDate && (
+              <p style={{ color: BRAND.error, fontSize: 12, marginTop: 4 }}>
+                この日は休講日のため、欠席連絡は不要です。
+              </p>
+            )}
           </div>
           <div style={s.formGroup}>
             <label style={s.label}>
