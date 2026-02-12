@@ -3,16 +3,24 @@ import { BRAND, NAV_ITEMS } from "./constants/brand";
 import { s } from "./utils/styles";
 import HomePage from "./pages/HomePage";
 import AbsencePage from "./pages/AbsencePage";
+import LatePage from "./pages/LatePage";
 import CalendarPage from "./pages/CalendarPage";
 import BookingPage from "./pages/BookingPage";
 import SeminarPage from "./pages/SeminarPage";
+import GalleryPage from "./pages/GalleryPage";
+import FAQPage from "./pages/FAQPage";
+import TrialPage from "./pages/TrialPage";
 
 const PAGES = {
   home: HomePage,
   absence: AbsencePage,
+  late: LatePage,
   calendar: CalendarPage,
   booking: BookingPage,
   seminar: SeminarPage,
+  gallery: GalleryPage,
+  faq: FAQPage,
+  trial: TrialPage,
 };
 
 export default function App() {

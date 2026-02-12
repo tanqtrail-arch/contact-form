@@ -91,78 +91,76 @@ export default function AbsencePage() {
           授業開始の2時間前までにお願いいたします。
         </p>
 
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
-          <div style={s.formGroup}>
-            <label style={s.label}>
-              生徒氏名 <span style={s.required}>*必須</span>
-            </label>
-            <input
-              style={s.input}
-              placeholder="山田 太郎"
-              value={form.studentName}
-              onChange={(e) => setForm({ ...form, studentName: e.target.value })}
-              onFocus={focusStyle}
-              onBlur={blurStyle}
-            />
-          </div>
-          <div style={s.formGroup}>
-            <label style={s.label}>
-              クラス <span style={s.required}>*必須</span>
-            </label>
-            <select
-              style={s.select}
-              value={form.className}
-              onChange={(e) => setForm({ ...form, className: e.target.value })}
-            >
-              <option value="">選択してください</option>
-              {CLASS_OPTIONS.map((c) => (
-                <option key={c} value={c}>
-                  {c}
-                </option>
-              ))}
-            </select>
-          </div>
+        <div style={s.formGroup}>
+          <label style={s.label}>
+            生徒氏名 <span style={s.required}>*必須</span>
+          </label>
+          <input
+            style={s.input}
+            placeholder="山田 太郎"
+            value={form.studentName}
+            onChange={(e) => setForm({ ...form, studentName: e.target.value })}
+            onFocus={focusStyle}
+            onBlur={blurStyle}
+          />
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
-          <div style={s.formGroup}>
-            <label style={s.label}>
-              欠席日 <span style={s.required}>*必須</span>
-            </label>
-            <input
-              type="date"
-              style={{
-                ...s.input,
-                ...(isClosedDate ? { borderColor: BRAND.error } : {}),
-              }}
-              value={form.date}
-              onChange={(e) => setForm({ ...form, date: e.target.value })}
-              onFocus={focusStyle}
-              onBlur={blurStyle}
-            />
-            {isClosedDate && (
-              <p style={{ color: BRAND.error, fontSize: 12, marginTop: 4 }}>
-                この日は休講日のため、欠席連絡は不要です。
-              </p>
-            )}
-          </div>
-          <div style={s.formGroup}>
-            <label style={s.label}>
-              理由 <span style={s.required}>*必須</span>
-            </label>
-            <select
-              style={s.select}
-              value={form.reason}
-              onChange={(e) => setForm({ ...form, reason: e.target.value })}
-            >
-              <option value="">選択してください</option>
-              <option value="体調不良">体調不良</option>
-              <option value="家庭の都合">家庭の都合</option>
-              <option value="学校行事">学校行事</option>
-              <option value="旅行・外出">旅行・外出</option>
-              <option value="その他">その他</option>
-            </select>
-          </div>
+        <div style={s.formGroup}>
+          <label style={s.label}>
+            クラス <span style={s.required}>*必須</span>
+          </label>
+          <select
+            style={s.select}
+            value={form.className}
+            onChange={(e) => setForm({ ...form, className: e.target.value })}
+          >
+            <option value="">選択してください</option>
+            {CLASS_OPTIONS.map((c) => (
+              <option key={c} value={c}>
+                {c}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div style={s.formGroup}>
+          <label style={s.label}>
+            欠席日 <span style={s.required}>*必須</span>
+          </label>
+          <input
+            type="date"
+            style={{
+              ...s.input,
+              ...(isClosedDate ? { borderColor: BRAND.error } : {}),
+            }}
+            value={form.date}
+            onChange={(e) => setForm({ ...form, date: e.target.value })}
+            onFocus={focusStyle}
+            onBlur={blurStyle}
+          />
+          {isClosedDate && (
+            <p style={{ color: BRAND.error, fontSize: 12, marginTop: 4 }}>
+              この日は休講日のため、欠席連絡は不要です。
+            </p>
+          )}
+        </div>
+
+        <div style={s.formGroup}>
+          <label style={s.label}>
+            理由 <span style={s.required}>*必須</span>
+          </label>
+          <select
+            style={s.select}
+            value={form.reason}
+            onChange={(e) => setForm({ ...form, reason: e.target.value })}
+          >
+            <option value="">選択してください</option>
+            <option value="体調不良">体調不良</option>
+            <option value="家庭の都合">家庭の都合</option>
+            <option value="学校行事">学校行事</option>
+            <option value="旅行・外出">旅行・外出</option>
+            <option value="その他">その他</option>
+          </select>
         </div>
 
         <div style={s.formGroup}>
@@ -177,19 +175,22 @@ export default function AbsencePage() {
           />
         </div>
 
-        <div style={{ display: "flex", justifyContent: "flex-end", marginTop: 8 }}>
-          <button
-            style={{
-              ...s.btn,
-              ...s.btnPrimary,
-              opacity: isValid ? 1 : 0.5,
-              pointerEvents: isValid ? "auto" : "none",
-            }}
-            onClick={handleSubmit}
-          >
-            送信する →
-          </button>
-        </div>
+        <button
+          style={{
+            ...s.btn,
+            ...s.btnPrimary,
+            width: "100%",
+            justifyContent: "center",
+            padding: "16px 32px",
+            fontSize: 16,
+            marginTop: 8,
+            opacity: isValid ? 1 : 0.5,
+            pointerEvents: isValid ? "auto" : "none",
+          }}
+          onClick={handleSubmit}
+        >
+          送信する →
+        </button>
       </div>
 
       <div
