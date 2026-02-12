@@ -8,10 +8,10 @@ const QUICK_LINKS = [
   { id: "late", icon: "🕐", title: "遅刻連絡", desc: "遅れる場合はこちらから", color: "#0097A7" },
   { id: "calendar", icon: "📅", title: "年間カレンダー", desc: "授業日・休講日の確認", color: "#1976D2" },
   { id: "booking", icon: "🤝", title: "面談予約", desc: "ご都合の良い日時を選択", color: "#7B1FA2" },
+  { id: "trial", icon: "🌱", title: "無料体験授業", desc: "体験のお申し込みはこちら", color: "#2E7D32" },
   { id: "seminar", icon: "🎓", title: "保護者セミナー", desc: "セミナー情報・お申し込み", color: "#E8A838" },
   { id: "gallery", icon: "📸", title: "発表会ギャラリー", desc: "イベントの様子を公開", color: "#E64A19" },
   { id: "faq", icon: "❓", title: "よくある質問", desc: "FAQ・お問い合わせ", color: "#5C6BC0" },
-  { id: "trial", icon: "🌱", title: "無料体験授業", desc: "体験のお申し込みはこちら", color: "#2E7D32" },
 ];
 
 export default function HomePage({ setPage }) {
