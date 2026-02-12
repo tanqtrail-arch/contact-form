@@ -29,10 +29,10 @@ export const NAV_ITEMS = [
   { id: "late", label: "遅刻連絡", icon: "🕐" },
   { id: "calendar", label: "カレンダー", icon: "📅" },
   { id: "booking", label: "面談予約", icon: "🤝" },
+  { id: "trial", label: "体験授業", icon: "🌱" },
   { id: "seminar", label: "セミナー", icon: "🎓" },
   { id: "gallery", label: "ギャラリー", icon: "📸" },
   { id: "faq", label: "FAQ", icon: "❓" },
-  { id: "trial", label: "体験授業", icon: "🌱" },
 ];
 
 // Class options
