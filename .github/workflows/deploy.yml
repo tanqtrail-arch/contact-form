@@ -24,7 +24,24 @@ jobs:
           cache: 'npm'
       - run: npm ci
       - name: Restore source index.html for Vite build
-        run: cp index.template.html index.html
+        run: |
+          cat > index.html << 'HTMLEOF'
+          <!doctype html>
+          <html lang="ja">
+            <head>
+              <meta charset="UTF-8" />
+              <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+              <link rel="preconnect" href="https://fonts.googleapis.com" />
+              <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+              <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+              <title>TRAIL 保護者ポータル</title>
+            </head>
+            <body>
+              <div id="root"><div style="display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:'Noto Sans JP',sans-serif;color:#1B6B4A">読み込み中…</div></div>
+              <script type="module" src="/src/main.jsx"></script>
+            </body>
+          </html>
+          HTMLEOF
       - run: npm run build
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3

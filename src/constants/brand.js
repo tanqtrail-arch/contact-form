@@ -22,8 +22,6 @@ export const BRAND = {
 // GAS Web App URL
 export const GAS_URL =
   "https://script.google.com/macros/s/AKfycbzCxvnRj3h1QQbkH-KJjaikCP_-ny4hQ1OnpQXg_D6O7vZQjc7dThFj8jgr1swu1e_MKw/exec";
-
-// Navigation items
 export const NAV_ITEMS = [
   { id: "home", label: "ホーム", icon: "🏠" },
   { id: "absence", label: "欠席連絡", icon: "✉️" },
