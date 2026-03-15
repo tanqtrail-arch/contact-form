@@ -46,7 +46,7 @@ export default function TrialPage() {
     form.trialType &&
     (!needsClass || form.preferredClass) &&
     form.date &&
-    (form.phone || form.email);
+    form.phone && form.email;
 
   const handleSubmit = async () => {
     if (!isValid) return;
@@ -274,7 +274,7 @@ export default function TrialPage() {
 
         <div style={s.formGroup}>
           <label style={s.label}>
-            電話番号 <span style={{ color: BRAND.textLight, fontSize: 11, marginLeft: 4 }}>*電話またはメール必須</span>
+            電話番号 <span style={s.required}>*必須</span>
           </label>
           <input
             type="tel"
@@ -289,7 +289,7 @@ export default function TrialPage() {
 
         <div style={s.formGroup}>
           <label style={s.label}>
-            メールアドレス <span style={{ color: BRAND.textLight, fontSize: 11, marginLeft: 4 }}>*電話またはメール必須</span>
+           メールアドレス <span style={s.required}>*必須</span>
           </label>
           <input
             type="email"
