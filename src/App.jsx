@@ -1,22 +1,46 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { BRAND, NAV_ITEMS } from "./constants/brand";
 import { s } from "./utils/styles";
 import HomePage from "./pages/HomePage";
 import AbsencePage from "./pages/AbsencePage";
+import LatePage from "./pages/LatePage";
 import CalendarPage from "./pages/CalendarPage";
 import BookingPage from "./pages/BookingPage";
 import SeminarPage from "./pages/SeminarPage";
+import GalleryPage from "./pages/GalleryPage";
+import FAQPage from "./pages/FAQPage";
+import TrialPage from "./pages/TrialPage";
 
 const PAGES = {
   home: HomePage,
   absence: AbsencePage,
+  late: LatePage,
   calendar: CalendarPage,
   booking: BookingPage,
   seminar: SeminarPage,
+  gallery: GalleryPage,
+  faq: FAQPage,
+  trial: TrialPage,
 };
 
+function getPageFromHash() {
+  const hash = window.location.hash.replace("#", "");
+  return PAGES[hash] ? hash : "home";
+}
+
 export default function App() {
-  const [page, setPage] = useState("home");
+  const [page, setPage] = useState(getPageFromHash);
+
+  useEffect(() => {
+    const onHashChange = () => setPage(getPageFromHash());
+    window.addEventListener("hashchange", onHashChange);
+    return () => window.removeEventListener("hashchange", onHashChange);
+  }, []);
+
+  const navigate = (id) => {
+    window.location.hash = id === "home" ? "" : id;
+    setPage(id);
+  };
 
   const PageComponent = PAGES[page] || HomePage;
 
@@ -39,7 +63,7 @@ export default function App() {
               <div
                 key={item.id}
                 style={s.navItem(page === item.id)}
-                onClick={() => setPage(item.id)}
+                onClick={() => navigate(item.id)}
                 onMouseEnter={(e) => {
                   if (page !== item.id) e.currentTarget.style.color = "rgba(255,255,255,0.95)";
                 }}
@@ -57,7 +81,7 @@ export default function App() {
 
       {/* Main content */}
       <main style={s.main}>
-        <PageComponent setPage={setPage} />
+        <PageComponent setPage={navigate} />
       </main>
 
       {/* Footer */}

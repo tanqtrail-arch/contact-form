@@ -1,3 +1,4 @@
+// v2 deploy
 // TRAIL Brand Colors & Constants
 export const BRAND = {
   primary: "#1B6B4A",
@@ -24,9 +25,13 @@ export const GAS_URL =
 export const NAV_ITEMS = [
   { id: "home", label: "ホーム", icon: "🏠" },
   { id: "absence", label: "欠席連絡", icon: "✉️" },
-  { id: "calendar", label: "年間カレンダー", icon: "📅" },
+  { id: "late", label: "遅刻連絡", icon: "🕐" },
+  { id: "calendar", label: "カレンダー", icon: "📅" },
   { id: "booking", label: "面談予約", icon: "🤝" },
-  { id: "seminar", label: "保護者セミナー", icon: "🎓" },
+  { id: "trial", label: "体験授業", icon: "🌱" },
+  { id: "seminar", label: "セミナー", icon: "🎓" },
+  { id: "gallery", label: "ギャラリー", icon: "📸" },
+  { id: "faq", label: "FAQ", icon: "❓" },
 ];
 
 // Class options
